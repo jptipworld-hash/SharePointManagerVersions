@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SharePoint Versioning Manager - Web Edition</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-cogs"></i>
+                    <h1>SharePoint Versioning Manager</h1>
+                    <span class="version">Web Edition v2.0</span>
+                </div>
+                <div class="status" id="connectionStatus">
+                    <i class="fas fa-circle offline"></i>
+                    <span>Desconectado</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('config')">
+                <i class="fas fa-cog"></i> Configurações
+            </button>
+            <button class="nav-tab" onclick="showTab('sites')">
+                <i class="fas fa-list"></i> Gerenciar Sites
+            </button>
+            <button class="nav-tab" onclick="showTab('process')">
+                <i class="fas fa-play"></i> Processar
+            </button>
+            <button class="nav-tab" onclick="showTab('reports')">
+                <i class="fas fa-chart-line"></i> Relatórios
+            </button>
+            <button class="nav-tab" onclick="showTab('help')">
+                <i class="fas fa-question-circle"></i> Ajuda
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- Configurações Tab -->
+            <div id="config" class="tab-content active">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-cog"></i> Configurações de Versionamento</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="majorVersions">
+                                <i class="fas fa-layer-group"></i> Versões Principais:
+                            </label>
+                            <input type="number" id="majorVersions" min="1" max="50" value="3">
+                            <small>Número máximo de versões principais (1-50)</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="minorVersions">
+                                <i class="fas fa-code-branch"></i> Versões Secundárias:
+                            </label>
+                            <input type="number" id="minorVersions" min="0" max="10" value="1">
+                            <small>Número máximo de versões secundárias (0-10)</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tenantUrl">
+                                <i class="fas fa-globe"></i> URL do Tenant:
+                            </label>
+                            <input type="text" id="tenantUrl" placeholder="https://seudominio.sharepoint.com">
+                            <small>URL base do seu tenant SharePoint</small>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="saveConfig()">
+                            <i class="fas fa-save"></i> Salvar Configurações
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Authentication Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-key"></i> Autenticação</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="auth-status" id="authStatus">
+                            <i class="fas fa-exclamation-triangle text-warning"></i>
+                            <span>Não autenticado</span>
+                        </div>
+                        
+                        <button class="btn btn-success" id="authButton" onclick="authenticate()">
+                            <i class="fas fa-sign-in-alt"></i> Fazer Login no SharePoint
+                        </button>
+                        
+                        <div class="auth-info">
+                            <p><strong>Como funciona a autenticação:</strong></p>
+                            <ul>
+                                <li>Clique em "Fazer Login" para autenticar</li>
+                                <li>Uma janela popup será aberta</li>
+                                <li>Faça login com suas credenciais Office 365</li>
+                                <li>A autenticação será válida para todos os sites</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sites Tab -->
+            <div id="sites" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-list"></i> Lista de Sites SharePoint</h2>
+                        <button class="btn btn-secondary" onclick="loadSampleSites()">
+                            <i class="fas fa-download"></i> Carregar Exemplos
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="sitesList">
+                                <i class="fas fa-link"></i> URLs dos Sites (uma por linha):
+                            </label>
+                            <textarea id="sitesList" rows="10" placeholder="https://seudominio.sharepoint.com/sites/site1&#10;https://seudominio.sharepoint.com/sites/site2&#10;https://seudominio.sharepoint.com/sites/site3"></textarea>
+                            <small>Digite uma URL completa por linha</small>
+                        </div>
+
+                        <div class="sites-actions">
+                            <button class="btn btn-primary" onclick="validateSites()">
+                                <i class="fas fa-check"></i> Validar URLs
+                            </button>
+                            <button class="btn btn-secondary" onclick="clearSites()">
+                                <i class="fas fa-trash"></i> Limpar Lista
+                            </button>
+                            <button class="btn btn-info" onclick="exportSites()">
+                                <i class="fas fa-download"></i> Exportar Lista
+                            </button>
+                        </div>
+
+                        <div id="sitesValidation" class="validation-results"></div>
+                    </div>
+                </div>
+
+                <!-- Sites Counter -->
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="counter">
+                            <div class="counter-number" id="sitesCount">0</div>
+                            <div class="counter-label">Sites na Lista</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Process Tab -->
+            <div id="process" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-play"></i> Processar Sites</h2>
+                    </div>
+                    <div class="card-body">
+                        
+                        <!-- Pre-process Info -->
+                        <div class="process-info">
+                            <h3><i class="fas fa-info-circle"></i> Informações do Processamento</h3>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Sites na lista:</span>
+                                    <span class="info-value" id="processingSitesCount">0</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Versões principais:</span>
+                                    <span class="info-value" id="processingMajorVersions">3</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Versões secundárias:</span>
+                                    <span class="info-value" id="processingMinorVersions">1</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Process Controls -->
+                        <div class="process-controls">
+                            <button class="btn btn-success btn-large" id="startProcessButton" onclick="startProcessing()">
+                                <i class="fas fa-rocket"></i> Iniciar Processamento
+                            </button>
+                            <button class="btn btn-danger" id="stopProcessButton" onclick="stopProcessing()" style="display: none;">
+                                <i class="fas fa-stop"></i> Parar Processamento
+                            </button>
+                        </div>
+
+                        <!-- Progress -->
+                        <div id="progressSection" class="progress-section" style="display: none;">
+                            <h3><i class="fas fa-tasks"></i> Progresso</h3>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                                <span class="progress-text" id="progressText">0%</span>
+                            </div>
+                            <div class="progress-details">
+                                <span id="currentSite">Preparando...</span>
+                            </div>
+                        </div>
+
+                        <!-- Results -->
+                        <div id="resultsSection" class="results-section" style="display: none;">
+                            <h3><i class="fas fa-chart-bar"></i> Resultados</h3>
+                            <div class="results-grid">
+                                <div class="result-item success">
+                                    <div class="result-number" id="successCount">0</div>
+                                    <div class="result-label">Sucessos</div>
+                                </div>
+                                <div class="result-item error">
+                                    <div class="result-number" id="errorCount">0</div>
+                                    <div class="result-label">Erros</div>
+                                </div>
+                                <div class="result-item total">
+                                    <div class="result-number" id="totalLibraries">0</div>
+                                    <div class="result-label">Bibliotecas</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Log -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-terminal"></i> Log em Tempo Real</h2>
+                        <button class="btn btn-secondary btn-small" onclick="clearLog()">
+                            <i class="fas fa-broom"></i> Limpar
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div id="liveLog" class="live-log"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div id="reports" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-chart-line"></i> Relatórios</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="reportsList" class="reports-list">
+                            <p class="no-reports">Nenhum relatório disponível. Execute um processamento primeiro.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Help Tab -->
+            <div id="help" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-question-circle"></i> Ajuda e Documentação</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="help-content">
+                            <h3><i class="fas fa-rocket"></i> Como Usar</h3>
+                            <ol>
+                                <li><strong>Configure:</strong> Defina o número de versões principais e secundárias</li>
+                                <li><strong>Autentique:</strong> Faça login no SharePoint na aba Configurações</li>
+                                <li><strong>Adicione Sites:</strong> Liste as URLs dos sites na aba Gerenciar Sites</li>
+                                <li><strong>Processe:</strong> Execute o processamento na aba Processar</li>
+                                <li><strong>Verifique:</strong> Veja os resultados na aba Relatórios</li>
+                            </ol>
+
+                            <h3><i class="fas fa-exclamation-triangle"></i> Importante</h3>
+                            <ul>
+                                <li>Você precisa ter permissões de administrador nos sites SharePoint</li>
+                                <li>O sistema configura apenas bibliotecas de documentos</li>
+                                <li>Mantenha backup das configurações originais</li>
+                                <li>Teste sempre em sites de desenvolvimento primeiro</li>
+                            </ul>
+
+                            <h3><i class="fas fa-globe"></i> Hospedagem Gratuita</h3>
+                            <p>Este sistema pode ser hospedado gratuitamente em:</p>
+                            <ul>
+                                <li><strong>GitHub Pages:</strong> github.com → Repositório → Settings → Pages</li>
+                                <li><strong>Netlify:</strong> netlify.com → Deploy manual ou via Git</li>
+                                <li><strong>Vercel:</strong> vercel.com → Import projeto</li>
+                                <li><strong>Firebase:</strong> firebase.google.com → Hosting</li>
+                            </ul>
+
+                            <h3><i class="fas fa-code"></i> Informações Técnicas</h3>
+                            <p><strong>Versão:</strong> 2.0 Web Edition</p>
+                            <p><strong>Tecnologias:</strong> HTML5, CSS3, JavaScript ES6</p>
+                            <p><strong>API:</strong> SharePoint REST API</p>
+                            <p><strong>Compatibilidade:</strong> Todos os navegadores modernos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
