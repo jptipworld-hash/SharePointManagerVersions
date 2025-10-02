@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SharePoint Versioning Manager - Web Edition</title>
+    <title>SharePoint Versioning Manager - Real Auth Edition</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
 </head>
@@ -15,7 +15,7 @@
                 <div class="logo">
                     <i class="fas fa-cogs"></i>
                     <h1>SharePoint Versioning Manager</h1>
-                    <span class="version">Web Edition v2.0</span>
+                    <span class="version">Real Auth v2.1</span>
                 </div>
                 <div class="status" id="connectionStatus">
                     <i class="fas fa-circle offline"></i>
@@ -86,7 +86,7 @@
                 <!-- Authentication Card -->
                 <div class="card">
                     <div class="card-header">
-                        <h2><i class="fas fa-key"></i> Autenticação</h2>
+                        <h2><i class="fas fa-key"></i> Autenticação Microsoft</h2>
                     </div>
                     <div class="card-body">
                         <div class="auth-status" id="authStatus">
@@ -95,16 +95,17 @@
                         </div>
                         
                         <button class="btn btn-success" id="authButton" onclick="authenticate()">
-                            <i class="fas fa-sign-in-alt"></i> Fazer Login no SharePoint
+                            <i class="fas fa-sign-in-alt"></i> Login Microsoft
                         </button>
                         
                         <div class="auth-info">
-                            <p><strong>Como funciona a autenticação:</strong></p>
+                            <p><strong>🔐 Autenticação Real Microsoft:</strong></p>
                             <ul>
-                                <li>Clique em "Fazer Login" para autenticar</li>
-                                <li>Uma janela popup será aberta</li>
-                                <li>Faça login com suas credenciais Office 365</li>
-                                <li>A autenticação será válida para todos os sites</li>
+                                <li>✅ <strong>Janela popup REAL</strong> será aberta</li>
+                                <li>✅ <strong>Login Office 365</strong> com suas credenciais</li>
+                                <li>✅ <strong>Mostra usuário conectado</strong></li>
+                                <li>✅ <strong>Token válido</strong> para SharePoint</li>
+                                <li>⚠️ <strong>Permita popups</strong> no navegador</li>
                             </ul>
                         </div>
                     </div>
@@ -160,13 +161,13 @@
             <div id="process" class="tab-content">
                 <div class="card">
                     <div class="card-header">
-                        <h2><i class="fas fa-play"></i> Processar Sites</h2>
+                        <h2><i class="fas fa-play"></i> Processar Sites (REAL)</h2>
                     </div>
                     <div class="card-body">
                         
                         <!-- Pre-process Info -->
                         <div class="process-info">
-                            <h3><i class="fas fa-info-circle"></i> Informações do Processamento</h3>
+                            <h3><i class="fas fa-info-circle"></i> ⚡ Processamento REAL</h3>
                             <div class="info-grid">
                                 <div class="info-item">
                                     <span class="info-label">Sites na lista:</span>
@@ -181,12 +182,22 @@
                                     <span class="info-value" id="processingMinorVersions">1</span>
                                 </div>
                             </div>
+                            
+                            <div style="margin-top: 15px; padding: 15px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 6px;">
+                                <p><strong>🚀 DIFERENÇA DA VERSÃO REAL:</strong></p>
+                                <ul style="margin: 10px 0 0 20px;">
+                                    <li>✅ <strong>Conecta realmente</strong> nos sites SharePoint</li>
+                                    <li>✅ <strong>Configura versionamento</strong> das bibliotecas</li>
+                                    <li>✅ <strong>Usa SharePoint REST API</strong></li>
+                                    <li>✅ <strong>Requer permissões</strong> de administrador</li>
+                                </ul>
+                            </div>
                         </div>
 
                         <!-- Process Controls -->
                         <div class="process-controls">
                             <button class="btn btn-success btn-large" id="startProcessButton" onclick="startProcessing()">
-                                <i class="fas fa-rocket"></i> Iniciar Processamento
+                                <i class="fas fa-rocket"></i> Iniciar Processamento REAL
                             </button>
                             <button class="btn btn-danger" id="stopProcessButton" onclick="stopProcessing()" style="display: none;">
                                 <i class="fas fa-stop"></i> Parar Processamento
@@ -258,41 +269,43 @@
             <div id="help" class="tab-content">
                 <div class="card">
                     <div class="card-header">
-                        <h2><i class="fas fa-question-circle"></i> Ajuda e Documentação</h2>
+                        <h2><i class="fas fa-question-circle"></i> Ajuda - Versão Real</h2>
                     </div>
                     <div class="card-body">
                         <div class="help-content">
-                            <h3><i class="fas fa-rocket"></i> Como Usar</h3>
+                            <h3><i class="fas fa-rocket"></i> Como Usar (Versão Real)</h3>
                             <ol>
-                                <li><strong>Configure:</strong> Defina o número de versões principais e secundárias</li>
-                                <li><strong>Autentique:</strong> Faça login no SharePoint na aba Configurações</li>
-                                <li><strong>Adicione Sites:</strong> Liste as URLs dos sites na aba Gerenciar Sites</li>
-                                <li><strong>Processe:</strong> Execute o processamento na aba Processar</li>
-                                <li><strong>Verifique:</strong> Veja os resultados na aba Relatórios</li>
+                                <li><strong>Configure:</strong> Defina versões principais e secundárias</li>
+                                <li><strong>URL Tenant:</strong> Configure https://seudominio.sharepoint.com</li>
+                                <li><strong>Autentique:</strong> Login REAL com Office 365 (popup)</li>
+                                <li><strong>Sites:</strong> Liste URLs reais dos seus sites</li>
+                                <li><strong>Processe:</strong> Configuração REAL das bibliotecas</li>
                             </ol>
 
-                            <h3><i class="fas fa-exclamation-triangle"></i> Importante</h3>
+                            <h3><i class="fas fa-exclamation-triangle"></i> Importante - Versão Real</h3>
                             <ul>
-                                <li>Você precisa ter permissões de administrador nos sites SharePoint</li>
-                                <li>O sistema configura apenas bibliotecas de documentos</li>
-                                <li>Mantenha backup das configurações originais</li>
-                                <li>Teste sempre em sites de desenvolvimento primeiro</li>
+                                <li><strong>Permissões:</strong> Você precisa ser admin dos sites</li>
+                                <li><strong>Popups:</strong> Permita popups para autenticação</li>
+                                <li><strong>Real:</strong> Modifica realmente o SharePoint!</li>
+                                <li><strong>Backup:</strong> Teste em ambiente de dev primeiro</li>
+                                <li><strong>Token:</strong> Sessão expira, faça login novamente se necessário</li>
                             </ul>
 
-                            <h3><i class="fas fa-globe"></i> Hospedagem Gratuita</h3>
-                            <p>Este sistema pode ser hospedado gratuitamente em:</p>
+                            <h3><i class="fas fa-code"></i> Diferenças da Versão Real</h3>
+                            <p><strong>Demo vs Real:</strong></p>
                             <ul>
-                                <li><strong>GitHub Pages:</strong> github.com → Repositório → Settings → Pages</li>
-                                <li><strong>Netlify:</strong> netlify.com → Deploy manual ou via Git</li>
-                                <li><strong>Vercel:</strong> vercel.com → Import projeto</li>
-                                <li><strong>Firebase:</strong> firebase.google.com → Hosting</li>
+                                <li>✅ <strong>Autenticação:</strong> Microsoft real vs simulada</li>
+                                <li>✅ <strong>API:</strong> SharePoint REST real vs simulação</li>
+                                <li>✅ <strong>Configuração:</strong> Modifica realmente vs demo</li>
+                                <li>✅ <strong>Usuário:</strong> Mostra quem está logado</li>
+                                <li>✅ <strong>Permissões:</strong> Verifica acesso real</li>
                             </ul>
 
-                            <h3><i class="fas fa-code"></i> Informações Técnicas</h3>
-                            <p><strong>Versão:</strong> 2.0 Web Edition</p>
-                            <p><strong>Tecnologias:</strong> HTML5, CSS3, JavaScript ES6</p>
+                            <h3><i class="fas fa-cog"></i> Tecnologias</h3>
+                            <p><strong>Versão:</strong> 2.1 Real Auth Edition</p>
+                            <p><strong>Autenticação:</strong> Microsoft Authentication Library (MSAL.js)</p>
                             <p><strong>API:</strong> SharePoint REST API</p>
-                            <p><strong>Compatibilidade:</strong> Todos os navegadores modernos</p>
+                            <p><strong>Segurança:</strong> OAuth 2.0 + OpenID Connect</p>
                         </div>
                     </div>
                 </div>
@@ -302,6 +315,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="script.js"></script>
+    <script src="script-real-auth.js"></script>
 </body>
 </html>
